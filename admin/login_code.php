@@ -2,7 +2,8 @@
 if(isset($_POST['login_btn']))
 {
     session_start();
-   include_once('/storage/ssd3/620/13865620/public_html/MyApi/admin/includes/adminDbConnect.php');
+  // include_once('/storage/ssd3/620/13865620/public_html/MyApi/admin/includes/adminDbConnect.php');
+  include_once dirname(__FILE__)  . '\includes\adminDbConnect.php';
     $email = $_POST['emaill'];
   $password = $_POST['passwordd'];
   

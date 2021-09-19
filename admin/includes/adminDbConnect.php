@@ -1,9 +1,17 @@
 <?php
 
 $server_name = "localhost";
+$db_username = "root";
+$db_password = "";
+$db_name = "id13865620_hostel";
+/**
+ 
+$server_name = "localhost";
 $db_username = "id13865620_hostel_db";
 $db_password = "Newpassword_2332";
 $db_name = "id13865620_hostel";
+ */
+
 
 // $server_name = "localhost:3306";
 // $db_username = "id13865620_hostel_db";

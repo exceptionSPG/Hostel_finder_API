@@ -83,8 +83,8 @@ include('includes/navbar.php');
       <div class="table-responsive">
 
         <?php
-        //include_once('C:\xampp\htdocs\MyApi\includes\DBOperations.php');
-        include_once('/storage/ssd3/620/13865620/public_html/MyApi/includes/DBOperations.php');
+        include_once('C:\xampp\htdocs\HF_Online\includes\DBOperations.php');
+        //include_once('/storage/ssd3/620/13865620/public_html/MyApi/includes/DBOperations.php');
         $db = new DBOperations;
         $result = $db->getAllUsers();
         ?>

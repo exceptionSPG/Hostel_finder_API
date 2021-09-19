@@ -1,7 +1,9 @@
 <?php
 include('security.php');
 
-include_once('/storage/ssd3/620/13865620/public_html/MyApi/includes/DBOperations.php');
+//include_once('/storage/ssd3/620/13865620/public_html/MyApi/includes/DBOperations.php');
+include_once('C:\xampp\htdocs\HF_Online\includes\DBOperations.php');
+
 if(isset($_POST['update_request_btn'])){
   $req_id = $_POST['update_request_id'];
 
