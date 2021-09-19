@@ -8,12 +8,12 @@ CREATE TABLE `admin` (
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updation_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-INSERT INTO admin VALUES("1","admin","code.lpu1@gmail.com","Test@1234","2016-04-04 20:31:45","2020-12-01 10:34:45");
-INSERT INTO admin VALUES("2","shiva","gyawalishiva14@gmail.com","admin","2020-07-21 02:37:20","2020-07-22 18:15:00");
-INSERT INTO admin VALUES("3","Kapil","kapildevkota123@gmail.com","adminDHM","2020-07-21 02:54:14","2020-10-13 11:10:53");
-INSERT INTO admin VALUES("5","khana gaye hai","edit@dmail.gom","editpassword","2020-10-12 06:16:25","2020-12-01 10:34:59");
+INSERT INTO admin VALUES("1","admin","code.lpu1@gmail.com","Test@1234","2016-04-05 02:16:45","2020-10-13 00:26:32");
+INSERT INTO admin VALUES("2","shiva","gyawalishiva14@gmail.com","admin","2020-07-21 08:22:20","2020-07-23 00:00:00");
+INSERT INTO admin VALUES("3","Kapil","kapildevkota123@gmail.com","adminDHM","2020-07-21 08:39:14","2020-10-13 16:55:53");
+INSERT INTO admin VALUES("5","khana gaye hai","edit@dmail.gom","$editpassword","2020-10-12 12:01:25","2020-10-12 20:09:19");
 
 
 
@@ -40,13 +40,38 @@ CREATE TABLE `courses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
-INSERT INTO courses VALUES("1","B10992","B.Tech","Bachelor  of Technology","2016-04-11 19:31:42");
-INSERT INTO courses VALUES("2","BCOM1453","B.Com","Bachelor Of commerce ","2016-04-11 19:32:46");
-INSERT INTO courses VALUES("3","BSC12","BSC","Bachelor  of Science","2016-04-11 19:33:23");
-INSERT INTO courses VALUES("4","BC36356","BCA","Bachelor Of Computer Application","2016-04-11 19:34:18");
-INSERT INTO courses VALUES("5","MCA565","MCA","Master of Computer Application","2016-04-11 19:34:40");
-INSERT INTO courses VALUES("6","MBA75","MBA","Master of Business Administration","2016-04-11 19:34:59");
-INSERT INTO courses VALUES("7","BE765","BE","Bachelor of Engineering","2016-04-11 19:35:19");
+INSERT INTO courses VALUES("1","B10992","B.Tech","Bachelor  of Technology","2016-04-12 01:16:42");
+INSERT INTO courses VALUES("2","BCOM1453","B.Com","Bachelor Of commerce ","2016-04-12 01:17:46");
+INSERT INTO courses VALUES("3","BSC12","BSC","Bachelor  of Science","2016-04-12 01:18:23");
+INSERT INTO courses VALUES("4","BC36356","BCA","Bachelor Of Computer Application","2016-04-12 01:19:18");
+INSERT INTO courses VALUES("5","MCA565","MCA","Master of Computer Application","2016-04-12 01:19:40");
+INSERT INTO courses VALUES("6","MBA75","MBA","Master of Business Administration","2016-04-12 01:19:59");
+INSERT INTO courses VALUES("7","BE765","BE","Bachelor of Engineering","2016-04-12 01:20:19");
+
+
+
+DROP TABLE enquiry;
+
+CREATE TABLE `enquiry` (
+  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `ownerid` int(11) NOT NULL,
+  `user_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `user_email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `user_phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `owner_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `hostel_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `hostel_address` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `enquiry_status` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Pending',
+  `enquiry_message` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `enquiry_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `enquiry_status_update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`eid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO enquiry VALUES("1","3","1","Shiva Prasad Gyawali","shiva@gmail.com","2147483647","Bipuj Solta","Middle pt ebhs Hostel","indrachowk","Pending","Hello, I want to stay for 2 month.","2021-07-01 17:16:54","");
+INSERT INTO enquiry VALUES("2","3","1","Shiva Prasad Gyawali","shiva@gmail.com","2147483647","Bipuj Solta","Middle pt ebhs Hostel","indrachowk","Pending","Hello, I want to stay for 2 month.","2021-07-01 17:25:44","");
+INSERT INTO enquiry VALUES("3","3","1","Shiva Prasad Gyawali","shiva@gmail.com","9867184049","Bipuj Solta","Middle pt ebhs Hostel","indrachowk","Pending","Hello, I want to stay for 2 month.","2021-07-13 21:26:29","");
 
 
 
@@ -56,14 +81,48 @@ CREATE TABLE `hostel_details` (
   `hdid` int(11) NOT NULL AUTO_INCREMENT,
   `hostel_code` varchar(20) NOT NULL,
   `total_room_number` int(11) NOT NULL,
-  `facility` varchar(300) DEFAULT NULL,
-  `pricing` int(11) DEFAULT NULL,
+  `facility` varchar(500) DEFAULT NULL,
+  `pricing` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`hdid`),
   UNIQUE KEY `hostel_code_unique_key` (`hostel_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO hostel_details VALUES("1","hf20201","50","Food, transport, wifi,","4000");
-INSERT INTO hostel_details VALUES("8","hf20202","20","wifi, food, sanitation","4000");
+INSERT INTO hostel_details VALUES("1","hf20201","50"," 24 Hour water & electricity
+ 24 Hour WIFI
+ C.C. Camera
+ Hygienic Food
+ Laundry
+ Non Veg Meal
+ Peaceful environment
+ Room Cleanliness
+ Study Room
+ Veg Meal","Single Person per room, per month: 10000
+Double Person per room, per month: 9000
+Three Person per room, per month: 8000
+Four Person per room, per month: 7000
+");
+INSERT INTO hostel_details VALUES("8","hf20202","20","24 Hour water & electricity
+ 24 Hour WIFI
+ AC
+ Attached Bathroom
+ C.C. Camera
+ Fan
+ Hygienic Food
+ Indoor Games
+ Laundry
+ Locker
+ Non Veg Meal
+ Peaceful environment
+ Playground
+ Room Cleanliness
+ Security Guard
+ Study Room
+ T.V. Room
+ Veg Meal","Single Person per room, per month: 11000
+Double Person per room, per month: 9000
+Three Person per room, per month: 8000
+Four Person per room, per month: 7000
+");
 
 
 
@@ -85,13 +144,14 @@ CREATE TABLE `hostel_owner` (
   PRIMARY KEY (`sid`),
   KEY `request_fk` (`req_id`),
   CONSTRAINT `request_fk` FOREIGN KEY (`req_id`) REFERENCES `hostel_request` (`hrid`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO hostel_owner VALUES("1","1","Bipuj solti","Like button boys hostel","Indrachowk, Narayanghat","Boys","9806597535","like@gmail.com","hf20201","hf20201","2020-06-29 18:15:00","2020-07-05 05:12:53");
-INSERT INTO hostel_owner VALUES("2","2","Praman Ghimire","Green Durbar Hostel","Duwakot bhaktapur","Boys","9800000000","paramanghimire25@gmail.com","hf20202","hf20202","2020-07-04 13:56:01","");
-INSERT INTO hostel_owner VALUES("3","3","Bipuj solta","Like button boys hostel","Indrachowk","Boys","9806597535","like@gmail.com","hf20203","hf20203","2020-07-04 13:56:19","2020-07-11 09:39:12");
-INSERT INTO hostel_owner VALUES("5","4","Hari Bhai Aacharya","Engineering Boys Hostel","Bhaktapur","Boys","9867683096","engineeringboyshostel@gmail.com","hf20204","hf20204","2020-10-14 08:26:56","");
-INSERT INTO hostel_owner VALUES("7","6","Minakshi Dev","Minu Girls Hostel","Birgunj","Girls","9806976453","minugirls@gmail.com","hf20206","hf20206","2020-10-15 16:01:09","");
+INSERT INTO hostel_owner VALUES("1","1","Bipuj solta","Like button boys hostel","Indrachowk","Boys","9806597535","like@gmail.com","hf20201","hf20201","2020-06-30 00:00:00","2020-07-05 10:57:53");
+INSERT INTO hostel_owner VALUES("2","2","Praman Ghimire","Green Durbar Hostel","Duwakot bhaktapur","Boys","9800000000","paramanghimire25@gmail.com","hf20202","hf20202","2020-07-04 19:41:01","");
+INSERT INTO hostel_owner VALUES("3","3","Bipuj solta","Like button boys hostel","Indrachowk","Boys","9806597535","like@gmail.com","hf20203","hf20203","2020-07-04 19:41:19","2020-07-11 15:24:12");
+INSERT INTO hostel_owner VALUES("5","4","Hari Bhai Aacharya","Engineering Boys Hostel","Bhaktapur","Boys","9867683096","engineeringboyshostel@gmail.com","hf20204","hf20204","2020-10-14 14:11:56","");
+INSERT INTO hostel_owner VALUES("7","6","Minakshi Dev","Minu Girls Hostel","Birgunj","Girls","9806976453","minugirls@gmail.com","hf20206","hf20206","2020-10-15 21:46:09","");
+INSERT INTO hostel_owner VALUES("9","9","Biwas Kunwar","Spikes Boys Hostel","Butwal","Boys","9867676320","spikeshostel@gmail.com","hf20209","hf20209","2020-10-16 09:53:29","");
 
 
 
@@ -101,8 +161,6 @@ CREATE TABLE `hostel_request` (
   `hrid` int(11) NOT NULL AUTO_INCREMENT,
   `hostel_name` varchar(100) NOT NULL,
   `hostel_location` varchar(200) NOT NULL,
-  `loc_lattitude` double DEFAULT NULL,
-  `loc_longitude` double DEFAULT NULL,
   `hostel_type` varchar(10) NOT NULL,
   `hostel_owner_name` varchar(200) NOT NULL,
   `contact_number` bigint(20) NOT NULL,
@@ -110,22 +168,15 @@ CREATE TABLE `hostel_request` (
   `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` varchar(10) NOT NULL DEFAULT 'Pending',
   PRIMARY KEY (`hrid`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO hostel_request VALUES("1","Dhital Girls Hostel","Duwakot","","","Girls","Prakriti","986745362","hgj@gmail.com","2020-10-13 06:44:38","Approved");
-INSERT INTO hostel_request VALUES("2","Green Durbar Hostel","Duwakot Bhaktapur","","","Boys","Praman Ghimire","9800000000","pramanghimire25@gmail.com","2020-10-14 03:08:31","Approved");
-INSERT INTO hostel_request VALUES("3","Green Durbar Hostel","Duwakot Bhaktapur","","","Boys","Praman Ghimire","9800000000","pramanghimire25@gmail.com","2020-10-14 03:08:41","Approved");
-INSERT INTO hostel_request VALUES("4","Engineering Boys Hostel","Bhaktapur","","","Boys","Hari Bhai Aacharya","9867683096","engineeringboyshostel@gmail.com","2020-10-14 07:28:05","Approved");
-INSERT INTO hostel_request VALUES("6","Minu Girls Hostel","Birgunj","","","Girls","Minakshi Dev","9806976453","minugirls@gmail.com","2020-10-15 15:57:44","Approved");
-INSERT INTO hostel_request VALUES("8","Demo Boys Hostel","Lalitpur","","","Boys","Dan Bahadur","9867456320","hosteldemo@gmail.com","2020-10-16 04:04:15","Pending");
-INSERT INTO hostel_request VALUES("12","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 10:42:29","Pending");
-INSERT INTO hostel_request VALUES("14","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:05:46","Pending");
-INSERT INTO hostel_request VALUES("15","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:10:51","Pending");
-INSERT INTO hostel_request VALUES("16","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:22:52","Pending");
-INSERT INTO hostel_request VALUES("17","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:23:25","Pending");
-INSERT INTO hostel_request VALUES("18","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:24:18","Pending");
-INSERT INTO hostel_request VALUES("19","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:25:16","Pending");
-INSERT INTO hostel_request VALUES("20","Middle pt ebhs Hostel","Mahalaxmisthan, Lalitpur","27.65","85.78","Boys","Prakriti Gyawali","9867345241","hasikhel@hostel.com","2020-12-01 11:26:22","Pending");
+INSERT INTO hostel_request VALUES("1","Dhital Girls Hostel","Duwakot","Girls","Prakriti","986745362","hgj@gmail.com","2020-10-13 12:29:38","Approved");
+INSERT INTO hostel_request VALUES("2","Green Durbar Hostel","Duwakot Bhaktapur","Boys","Praman Ghimire","9800000000","pramanghimire25@gmail.com","2020-10-14 08:53:31","Approved");
+INSERT INTO hostel_request VALUES("3","Green Durbar Hostel","Duwakot Bhaktapur","Boys","Praman Ghimire","9800000000","pramanghimire25@gmail.com","2020-10-14 08:53:41","Approved");
+INSERT INTO hostel_request VALUES("4","Engineering Boys Hostel","Bhaktapur","Boys","Hari Bhai Aacharya","9867683096","engineeringboyshostel@gmail.com","2020-10-14 13:13:05","Approved");
+INSERT INTO hostel_request VALUES("6","Minu Girls Hostel","Birgunj","Girls","Minakshi Dev","9806976453","minugirls@gmail.com","2020-10-15 21:42:44","Approved");
+INSERT INTO hostel_request VALUES("8","Demo Boys Hostel","Lalitpur","Boys","Dan Bahadur","9867456320","hosteldemo@gmail.com","2020-10-16 09:49:15","Pending");
+INSERT INTO hostel_request VALUES("9","Spikes Boys Hostel","Butwal","Boys","Biwas Kunwar","9867676320","spikeshostel@gmail.com","2020-10-16 09:50:14","Approved");
 
 
 
@@ -139,28 +190,26 @@ CREATE TABLE `hosteluser` (
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updation_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO hosteluser VALUES("10","shiva","shiav@gmail.com","$2y$10$rj5YU9HvuT/GMjOzgop5ZeundxQcciFE2LPm0aWDlrr","2020-07-01 06:32:28","");
-INSERT INTO hosteluser VALUES("11","shivavai","gyawalivai@gmail.com","$2y$10$UELNiunZ5XuN7FxaYmfiz.pu2t9KOyl0yl9C87zugqu","2020-07-01 10:05:08","");
-INSERT INTO hosteluser VALUES("12","sabite","sabite@","sabite","2020-07-04 15:15:33","");
-INSERT INTO hosteluser VALUES("13","test","test@gmail.com","$2y$10$h4jAv/pCx.ZEc7lLC/MCmO1z5GqolZeeihafl9ytRtE","2020-07-04 15:49:59","");
-INSERT INTO hosteluser VALUES("14","suman vai","sumanvai@gmail.com","suman","2020-07-05 02:16:54","2020-07-17 08:16:26");
-INSERT INTO hosteluser VALUES("16","vanja","vanja@gmail.com","1234","2020-07-11 09:51:02","");
-INSERT INTO hosteluser VALUES("17","vanja","vanja@gmail.com1","1234","2020-07-11 11:26:12","");
-INSERT INTO hosteluser VALUES("18","name","email@email.com","password","2020-07-11 11:45:57","");
-INSERT INTO hosteluser VALUES("19","name is","email2@email.com","password","2020-07-11 11:47:03","");
-INSERT INTO hosteluser VALUES("20","name","email3@email.com","password","2020-07-11 11:49:59","");
-INSERT INTO hosteluser VALUES("22","name","email4@email.com","password","2020-07-12 07:01:39","");
-INSERT INTO hosteluser VALUES("24","name","2email@email.com","password","2020-07-12 07:29:07","");
-INSERT INTO hosteluser VALUES("25","Suman Kharel","sumankharel666@gmail.com","suman","2020-07-12 10:58:17","");
-INSERT INTO hosteluser VALUES("26","Sakshu vanja","sakshu@gmail.com","1234","2020-07-13 04:22:20","");
-INSERT INTO hosteluser VALUES("27","pradeep vai","pradeep@gmail.com","1234","2020-07-13 09:00:08","");
-INSERT INTO hosteluser VALUES("28","gunnidhi","gokul@gmail.com","1234","2020-07-14 15:04:06","");
-INSERT INTO hosteluser VALUES("30","Kapil","kpd@gmail.com","1234","2020-10-08 15:08:45","");
-INSERT INTO hosteluser VALUES("32","keshab","keshav@gmail.com","keshav","2020-10-13 13:04:34","");
-INSERT INTO hosteluser VALUES("33","anything","anything@gmail.com","nothing","2020-11-14 17:56:26","");
-INSERT INTO hosteluser VALUES("34","Kiran vai","kiran1369@gmail.com","1234","2020-11-17 09:05:06","");
+INSERT INTO hosteluser VALUES("10","shiva","shiav@gmail.com","$2y$10$rj5YU9HvuT/GMjOzgop5ZeundxQcciFE2LPm0aWDlrr","2020-07-01 12:17:28","");
+INSERT INTO hosteluser VALUES("11","shivavai","gyawalivai@gmail.com","$2y$10$UELNiunZ5XuN7FxaYmfiz.pu2t9KOyl0yl9C87zugqu","2020-07-01 15:50:08","");
+INSERT INTO hosteluser VALUES("12","sabite","sabite@","sabite","2020-07-04 21:00:33","");
+INSERT INTO hosteluser VALUES("13","test","test@gmail.com","$2y$10$h4jAv/pCx.ZEc7lLC/MCmO1z5GqolZeeihafl9ytRtE","2020-07-04 21:34:59","");
+INSERT INTO hosteluser VALUES("14","suman vai","sumanvai@gmail.com","suman","2020-07-05 08:01:54","2020-07-17 14:01:26");
+INSERT INTO hosteluser VALUES("16","vanja","vanja@gmail.com","1234","2020-07-11 15:36:02","");
+INSERT INTO hosteluser VALUES("17","vanja","vanja@gmail.com1","1234","2020-07-11 17:11:12","");
+INSERT INTO hosteluser VALUES("18","name","email@email.com","password","2020-07-11 17:30:57","");
+INSERT INTO hosteluser VALUES("19","name is","email2@email.com","password","2020-07-11 17:32:03","");
+INSERT INTO hosteluser VALUES("20","name","email3@email.com","password","2020-07-11 17:34:59","");
+INSERT INTO hosteluser VALUES("22","name","email4@email.com","password","2020-07-12 12:46:39","");
+INSERT INTO hosteluser VALUES("24","name","2email@email.com","password","2020-07-12 13:14:07","");
+INSERT INTO hosteluser VALUES("25","Suman Kharel","sumankharel666@gmail.com","suman","2020-07-12 16:43:17","");
+INSERT INTO hosteluser VALUES("26","Sakshu vanja","sakshu@gmail.com","1234","2020-07-13 10:07:20","");
+INSERT INTO hosteluser VALUES("27","pradeep vai","pradeep@gmail.com","1234","2020-07-13 14:45:08","");
+INSERT INTO hosteluser VALUES("28","gunnidhi","gokul@gmail.com","1234","2020-07-14 20:49:06","");
+INSERT INTO hosteluser VALUES("30","Kapil","kpd@gmail.com","1234","2020-10-08 20:53:45","");
+INSERT INTO hosteluser VALUES("32","keshab","keshav@gmail.com","keshav","2020-10-13 18:49:34","");
 
 
 
@@ -199,11 +248,11 @@ CREATE TABLE `registration` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-INSERT INTO registration VALUES("6","100","5","8000","0","2016-04-22","5","Bachelor  of Technology","10806121","code","","projects","male","8285703354","code.lpu1@gmail.com","0","XYZ","Mother","8285703354","H n0 18/1 Bihari Puram Phase-1 Melrose Bye Pass","Aligarh","EPE","202001","H n0 18/1 Bihari Puram Phase-1 Melrose Bye Pass","Aligarh","EPE","202001","2016-04-16 08:24:09","");
-INSERT INTO registration VALUES("7","100","5","8000","1","2016-06-17","4","Bachelor of Engineering","108061211","code","test","projects","male","8467067344","test@gmail.com","8285703354","test","test","9999857868","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","2016-06-23 11:54:35","");
-INSERT INTO registration VALUES("8","112","3","4000","0","2016-06-27","5","Bachelor  of Science","102355","Harry","projects","Singh","male","6786786786","Harry@gmail.com","789632587","demo","demo","1234567890","New Delhi","Delhi","Delhi (NCT)","110001","New Delhi","Delhi","Delhi (NCT)","110001","2016-06-26 16:31:08","");
-INSERT INTO registration VALUES("9","132","5","2000","1","2016-06-28","6","Bachelor of Engineering","586952","Benjamin","","projects","male","8596185625","Benjamin@gmail.com","8285703354","demo","demo","8285703354","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","2016-06-26 16:40:07","");
-INSERT INTO registration VALUES("10","132","7","2000","0","2020-06-25","2","Bachelor  of Science","7676","vanja","","twaake","male","9806597535","vanja@gmail.com","0","000","000","0","000","000","Andhra Pradesh","0","000","000","Andhra Pradesh","0","2020-06-25 07:50:51","");
+INSERT INTO registration VALUES("6","100","5","8000","0","2016-04-22","5","Bachelor  of Technology","10806121","code","","projects","male","8285703354","code.lpu1@gmail.com","0","XYZ","Mother","8285703354","H n0 18/1 Bihari Puram Phase-1 Melrose Bye Pass","Aligarh","EPE","202001","H n0 18/1 Bihari Puram Phase-1 Melrose Bye Pass","Aligarh","EPE","202001","2016-04-16 14:09:09","");
+INSERT INTO registration VALUES("7","100","5","8000","1","2016-06-17","4","Bachelor of Engineering","108061211","code","test","projects","male","8467067344","test@gmail.com","8285703354","test","test","9999857868","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","2016-06-23 17:39:35","");
+INSERT INTO registration VALUES("8","112","3","4000","0","2016-06-27","5","Bachelor  of Science","102355","Harry","projects","Singh","male","6786786786","Harry@gmail.com","789632587","demo","demo","1234567890","New Delhi","Delhi","Delhi (NCT)","110001","New Delhi","Delhi","Delhi (NCT)","110001","2016-06-26 22:16:08","");
+INSERT INTO registration VALUES("9","132","5","2000","1","2016-06-28","6","Bachelor of Engineering","586952","Benjamin","","projects","male","8596185625","Benjamin@gmail.com","8285703354","demo","demo","8285703354","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","H no- 18/1 Bihari puram phase-1 melrose bye pass","Aligarh","EPE","202001","2016-06-26 22:25:07","");
+INSERT INTO registration VALUES("10","132","7","2000","0","2020-06-25","2","Bachelor  of Science","7676","vanja","","twaake","male","9806597535","vanja@gmail.com","0","000","000","0","000","000","Andhra Pradesh","0","000","000","Andhra Pradesh","0","2020-06-25 13:35:51","");
 
 
 
@@ -218,11 +267,11 @@ CREATE TABLE `rooms` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
-INSERT INTO rooms VALUES("1","100","100","8000","2016-04-11 22:45:43");
-INSERT INTO rooms VALUES("2","2","201","6000","2016-04-12 01:30:47");
-INSERT INTO rooms VALUES("3","2","200","6000","2016-04-12 01:30:58");
-INSERT INTO rooms VALUES("4","3","112","4000","2016-04-12 01:31:07");
-INSERT INTO rooms VALUES("5","5","132","2000","2016-04-12 01:31:15");
+INSERT INTO rooms VALUES("1","100","100","8000","2016-04-12 04:30:43");
+INSERT INTO rooms VALUES("2","2","201","6000","2016-04-12 07:15:47");
+INSERT INTO rooms VALUES("3","2","200","6000","2016-04-12 07:15:58");
+INSERT INTO rooms VALUES("4","3","112","4000","2016-04-12 07:16:07");
+INSERT INTO rooms VALUES("5","5","132","2000","2016-04-12 07:16:15");
 
 
 
@@ -292,7 +341,7 @@ CREATE TABLE `user_info` (
   CONSTRAINT `user_info_foreign` FOREIGN KEY (`uid`) REFERENCES `hosteluser` (`uid`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO user_info VALUES("7","14","9812967055","","2055-06-19","female","Krishna","9867457622","+2","I am handsome girl.","2020-07-20 11:31:06");
+INSERT INTO user_info VALUES("7","14","9812967055","","2055-06-19","female","Krishna","9867457622","+2","I am handsome girl.","2020-07-20 17:16:06");
 INSERT INTO user_info VALUES("8","27","9811552688","benimanipur ko top toll","2058-11-18","","keshav solta","9818618836","+2 running","lekhana ","");
 INSERT INTO user_info VALUES("12","12","9811552688","benimanipur ko top toll","2058-11-18","male","keshav solta","9818618836","+2 running","lekhana ","");
 INSERT INTO user_info VALUES("13","28","98676","yert","0000-00-00","Male","ter","9867","School level, Scienc","something","");
@@ -300,7 +349,7 @@ INSERT INTO user_info VALUES("14","16","98676","tanahu","0000-00-00","Male","vin
 INSERT INTO user_info VALUES("15","18","98676","email","0000-00-00","Male","keshai","9867","School level, Scienc","email@email.com","");
 INSERT INTO user_info VALUES("16","19","98676","email2","0000-00-00","Male","email2","9867","School level, Scienc","something foe","");
 INSERT INTO user_info VALUES("18","24","1231","bhutaha","2001-07-17","Female","twaa","1221","+2, Management","it\'s testing about date of birth.","");
-INSERT INTO user_info VALUES("20","26","9869534590","Sardi, Chukaha","2006-07-17","Male","Syamu dd","9869534591","School level, Scienc","kasto kei hunxa ra.","2020-09-26 14:46:39");
+INSERT INTO user_info VALUES("20","26","9869534590","Sardi, Chukaha","2006-07-17","Male","Syamu dd","9869534591","School level, Scienc","kasto kei hunxa ra.","2020-09-26 20:31:39");
 
 
 
@@ -317,15 +366,15 @@ CREATE TABLE `userlog` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-INSERT INTO userlog VALUES("1","10","test@gmail.com","","","","2016-06-22 06:16:42");
-INSERT INTO userlog VALUES("2","10","test@gmail.com","","","","2016-06-24 11:20:28");
-INSERT INTO userlog VALUES("4","10","test@gmail.com","::1","","","2016-06-24 11:22:47");
-INSERT INTO userlog VALUES("5","10","test@gmail.com","::1","","","2016-06-26 15:37:40");
-INSERT INTO userlog VALUES("6","20","Benjamin@gmail.com","::1","","","2016-06-26 16:40:57");
-INSERT INTO userlog VALUES("7","10","test@gmail.com","192.168.43.11","","","2020-06-25 07:53:26");
-INSERT INTO userlog VALUES("8","10","test@gmail.com","192.168.43.1","","","2020-06-25 07:53:27");
-INSERT INTO userlog VALUES("9","10","test@gmail.com","::1","","","2020-06-25 07:54:21");
-INSERT INTO userlog VALUES("10","22","kiran@gmail.com","::1","","","2020-06-25 08:19:09");
+INSERT INTO userlog VALUES("1","10","test@gmail.com","","","","2016-06-22 12:01:42");
+INSERT INTO userlog VALUES("2","10","test@gmail.com","","","","2016-06-24 17:05:28");
+INSERT INTO userlog VALUES("4","10","test@gmail.com","::1","","","2016-06-24 17:07:47");
+INSERT INTO userlog VALUES("5","10","test@gmail.com","::1","","","2016-06-26 21:22:40");
+INSERT INTO userlog VALUES("6","20","Benjamin@gmail.com","::1","","","2016-06-26 22:25:57");
+INSERT INTO userlog VALUES("7","10","test@gmail.com","192.168.43.11","","","2020-06-25 13:38:26");
+INSERT INTO userlog VALUES("8","10","test@gmail.com","192.168.43.1","","","2020-06-25 13:38:27");
+INSERT INTO userlog VALUES("9","10","test@gmail.com","::1","","","2020-06-25 13:39:21");
+INSERT INTO userlog VALUES("10","22","kiran@gmail.com","::1","","","2020-06-25 14:04:09");
 
 
 
@@ -347,11 +396,11 @@ CREATE TABLE `userregistration` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
-INSERT INTO userregistration VALUES("10","108061211","Hit ","that","like button","male","9806597535","test@gmail.com","Test@123","2016-06-22 04:21:33","25-06-2020 01:24:59","22-06-2016 05:16:49");
-INSERT INTO userregistration VALUES("19","102355","Harry","projects","Singh","male","6786786786","Harry@gmail.com","6786786786","2016-06-26 16:33:36","","");
-INSERT INTO userregistration VALUES("20","586952","Benjamin","","projects","male","8596185625","Benjamin@gmail.com","8596185625","2016-06-26 16:40:07","","");
-INSERT INTO userregistration VALUES("21","7676","vanja","","twaake","male","9806597535","vanja@gmail.com","9806597535","2020-06-25 07:50:51","","");
-INSERT INTO userregistration VALUES("22","7676","kiran","","adk","others","9806597535","kiran@gmail.com","kiran","2020-06-25 07:59:30","","");
+INSERT INTO userregistration VALUES("10","108061211","Hit ","that","like button","male","9806597535","test@gmail.com","Test@123","2016-06-22 10:06:33","25-06-2020 01:24:59","22-06-2016 05:16:49");
+INSERT INTO userregistration VALUES("19","102355","Harry","projects","Singh","male","6786786786","Harry@gmail.com","6786786786","2016-06-26 22:18:36","","");
+INSERT INTO userregistration VALUES("20","586952","Benjamin","","projects","male","8596185625","Benjamin@gmail.com","8596185625","2016-06-26 22:25:07","","");
+INSERT INTO userregistration VALUES("21","7676","vanja","","twaake","male","9806597535","vanja@gmail.com","9806597535","2020-06-25 13:35:51","","");
+INSERT INTO userregistration VALUES("22","7676","kiran","","adk","others","9806597535","kiran@gmail.com","kiran","2020-06-25 13:44:30","","");
 
 
 

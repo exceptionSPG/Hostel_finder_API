@@ -456,19 +456,20 @@ $app->post('/HF_Online/public/insertUserDetails', function (Request $request, Re
 
 */
 $app->post('/HF_Online/public/insertenquiry', function(Request $request, Response $response){
-    if(!haveEmptyParameters(array('userid','ownerid','username','user_email','user_phone','hostel_name','hostel_address','enquiry_message'),$request, $response)){
+    if(!haveEmptyParameters(array('userid','ownerid','username','user_email','user_phone','owner_name','hostel_name','hostel_address','enquiry_message'),$request, $response)){
             $request_data = $request->getParsedBody();
             $userid= $request_data['userid'];
             $ownerid = $request_data['ownerid'];
             $username=$request_data['username'];
             $user_email=$request_data['user_email'];
             $user_phone = $request_data['user_phone'];
+            $owner_name = $request_data['owner_name'];
             $hostel_name = $request_data['hostel_name'];
             $hostel_address = $request_data['hostel_address'];
             $enquiry_message = $request_data['enquiry_message'];
 
             $db = new DbOperations;
-            $result = $db->insertEnquiry($userid, $ownerid, $username, $user_email, $user_phone, $hostel_name, $hostel_address, $enquiry_message );
+            $result = $db->insertEnquiry($userid, $ownerid, $username, $user_email, $user_phone,$owner_name, $hostel_name, $hostel_address, $enquiry_message );
 
             if($result == USER_CREATED){
                 $message = array(); 
@@ -491,12 +492,12 @@ $app->post('/HF_Online/public/insertenquiry', function(Request $request, Respons
                             ->withHeader('Content-type', 'application/json')
                             ->withStatus(422);
             }
-
-
-    }
-    return $response
-    ->withHeader('Content-type', 'application/json')
-    ->withStatus(422);    
+    } else {
+        return $response
+            ->withHeader('Content-type', 'application/json')
+            ->withStatus(404);
+    }   
+     
 });
 
 
@@ -524,6 +525,49 @@ $app->get('/HF_Online/public/allusers', function(Request $request, Response $res
 
 });
 
+/**
+ * endpoint = allcount,
+ * it gives all count of users, owners, enquiry (pending total and reviewed),request
+    parameters = no params
+    method = GET
+ * getCountOfAllUsers
+ * for admin home dashboard
+ */
+$app->get('/HF_Online/public/allcount', function(Request $request, Response $response){
+
+    $db = new DbOperations; 
+
+    $userscount = $db->getCountOfAllUsers();
+    $ownerscount = $db->getCountOfAllOwners();
+    $enquiryTotal = $db->getCountOfAllEnquiry();
+    $enquiryPending = $db->getCountOfPendingEnquiry();
+    $enquiryReviewed = $db->getCountOfReviewedEnquiry();
+    $allOwnerRequest = $db->getCountOfAllOwnersRequest();
+    $allOwnerPendingRequest = $db->getCountOfAllOwnersPendingRequest();
+    $allOwnerApprovedRequest = $db->getCountOfAllOwnersApprovedgRequest();
+
+
+    $response_data = array();
+
+    $response_data['error'] = false; 
+    $response_data['usersCount'] = $userscount;
+    $response_data['ownersCount'] = $ownerscount;
+    $response_data['enquiryTotal'] = $enquiryTotal;
+    $response_data['enquiryPending'] = $enquiryPending;
+    $response_data['enquiryReviewed'] = $enquiryReviewed;
+    $response_data['allOwnerRequest'] = $allOwnerRequest;
+    $response_data['allOwnerPendingRequest'] = $allOwnerPendingRequest;
+    $response_data['allOwnerApprovedRequest'] = $allOwnerApprovedRequest;
+    $response_data['userShownHostelCount'] = $db->getCountOfAllOwners();
+
+
+    $response->getBody()->write(json_encode($response_data));
+
+    return $response
+    ->withHeader('Content-type', 'application/json')
+    ->withStatus(200);  
+
+});
 
 /**
     endpoint = allHostelOwners,
@@ -648,6 +692,162 @@ $app->get('/HF_Online/public/hostelinfobyhcode/{hostel_code}', function(Request 
     ->withHeader('Content-type', 'application/json')
     ->withStatus(200);  
 
+});
+
+/*
+    endpoint: allenquiry
+    parameter: none
+    method : get
+*/
+$app->get('/HF_Online/public/allenquiry', function(Request $request, Response $response){
+    $db = new DbOperations;
+    
+    $response_data = array();
+    $enquiries = $db->getAllEnquiry();
+    $response_data['Total'] = $db->getCountOfAllEnquiry();
+    $response_data['Pending'] = $db->getCountOfPendingEnquiry();
+    $response_data['Reviewed'] = $db->getCountOfReviewedEnquiry();
+    $response_data['error'] = false;
+    $response_data['enquiries'] = $enquiries;
+   
+
+    $response->getBody()->write(json_encode($response_data));
+
+    return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+
+});
+/*
+    endpoint: allpendingenquiry
+    parameter: none
+    method : get
+*/
+$app->get('/HF_Online/public/allpendingenquiry', function(Request $request, Response $response){
+    $db = new DbOperations;
+    
+    $response_data = array();
+    $enquiries = $db->getAllPendingEnquiry();
+    $response_data['Total'] = $db->getCountOfPendingEnquiry();
+    $response_data['error'] = false;
+    $response_data['enquiries'] = $enquiries;
+   
+
+    $response->getBody()->write(json_encode($response_data));
+
+    return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+
+});
+
+/**
+ * endpoint: pendingenquirybyowner_id
+ * parameter: ownerid
+ * method: get
+ * 
+ * 
+ */
+
+ $app->get('/HF_Online/public/pendingenquirybyowner_id/{ownerid}', function(Request $request, Response $response, array $args){
+     $owner_id = $args['ownerid'];
+     $db = new DbOperations;
+     $response_data = array();
+     $enquiryByOwnerId = $db->getAllPendingEnquiryByOwner_id($owner_id);
+     $count= $db->getCountOfPendingEnquiryByOwner_id($owner_id);
+     if($enquiryByOwnerId == null){
+        $response_data['error'] = true;
+        $response_data['Total'] = $count;
+        $response_data['enquiries'] = 'No data found.';
+     }else {
+        $response_data['error'] = false;
+        $response_data['Total'] = $count;
+        $response_data['enquiries'] = $enquiryByOwnerId;
+   
+        
+     }
+     $response->getBody()->write(json_encode($response_data));
+
+     return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+
+ });
+
+
+ /**
+  * all owner request
+
+  */
+  /*
+    endpoint: allenquiry
+    parameter: none
+    method : get
+*/
+$app->get('/HF_Online/public/allrequest', function(Request $request, Response $response){
+    $db = new DbOperations;
+    
+    $response_data = array();
+    $requests = $db->getAllRequest();
+    $response_data['Total'] = $db->getCountOfAllOwnersRequest();
+    $response_data['Pending'] = $db->getCountOfAllOwnersPendingRequest();
+    $response_data['Approved'] = $db->getCountOfAllOwnersApprovedgRequest();
+    $response_data['error'] = false;
+    $response_data['requests'] = $requests;
+   
+
+    $response->getBody()->write(json_encode($response_data));
+
+    return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+
+});
+
+
+/* 
+    endpoint: updaterequeststatus
+    parameter: hrid
+    method : PUT
+
+*/
+$app->put('/HF_Online/public/updaterequeststatus/{hrid}', function (Request $request, Response $response, array $args) {
+
+    $request_data = $request->getParsedBody(); 
+    $hostel_code = $request_data['hostel_code'];
+    $hostel_pwd = $request_data['hostel_pwd'];
+    $req_id =  $args['hrid'];
+   
+
+
+    $db = new DbOperations;
+
+    if ($db->updateRequestStatus($req_id,$hostel_code,$hostel_pwd)) {
+        $response_data = array();
+        $response_data['error'] = false;
+        $response_data['message'] = 'Request status Updated Successfully';
+
+
+        $response->getBody()->write(json_encode($response_data));
+
+        return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+    } else {
+        $response_data = array();
+        $response_data['error'] = true;
+        $response_data['message'] = 'Error on updating Request status.';
+
+        $response->getBody()->write(json_encode($response_data));
+
+        return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+    }
+
+    return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
 });
 
 
@@ -881,6 +1081,46 @@ $app->put('/HF_Online/public/updateOwner/{hostel_code}', function(Request $reque
     ->withHeader('Content-type', 'application/json')
     ->withStatus(200);  
 
+});
+
+/* 
+    endpoint: updateenquirystatus
+    parameter: eid
+    method : PUT
+
+*/
+$app->put('/HF_Online/public/updateenquirystatus/{eid}', function (Request $request, Response $response, array $args) {
+    $enq_id =  $args['eid'];
+
+
+    $db = new DbOperations;
+
+    if ($db->updateEnquiryStatus($enq_id)) {
+        $response_data = array();
+        $response_data['error'] = false;
+        $response_data['message'] = 'Enquiry status Updated Successfully';
+
+
+        $response->getBody()->write(json_encode($response_data));
+
+        return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+    } else {
+        $response_data = array();
+        $response_data['error'] = true;
+        $response_data['message'] = 'Error on updating enquiry status.';
+
+        $response->getBody()->write(json_encode($response_data));
+
+        return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
+    }
+
+    return $response
+        ->withHeader('Content-type', 'application/json')
+        ->withStatus(200);
 });
 
 $app->get('/HF_Online/public/showError/{uid}', function(Request $request, Response $response, array $args){
